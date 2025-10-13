@@ -1,5 +1,6 @@
 import { BasePage } from './Basepage';
 import { expect } from '@playwright/test';
+import { DashboardPage } from './DashboardPage';
 
 export class LoginPage extends BasePage {
   public usernameField = 'Mobile No / Email ID *';
@@ -71,13 +72,9 @@ export class LoginPage extends BasePage {
     await expect(this.page.getByRole('status')).toBeVisible();
   }
 
-  //  async verifyMandatoryFieldError() {
-  //   const actualErrorMessage = await this.page.getByRole('textbox', { name: this.usernameField }).evaluate(
-  //     (el: any) => el.validationMessage
-  //   );
-  //   console.log(`📋 Actual error message: "${actualErrorMessage}"`);
-  //   await expect(actualErrorMessage).toBe('Please fill out this field.');
-  // }
+  getDashboardPage() {
+    return new DashboardPage(this.page);
+  }
 
   async verifyMandatoryFieldError(fieldName: string) {
   const field = this.page.getByRole('textbox', { name: fieldName });

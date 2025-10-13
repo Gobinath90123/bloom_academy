@@ -67,4 +67,28 @@ test.describe('Forget Tests', () => {
     await forgetPage.clickResetPassword();
     await forgetPage.expectPasswordResetSuccess();
   });
+
+  test('Verify Show/Hide Password Toggle', async ({ page }) => {
+    await forgetPage.completeOtpFlow('1234567890');
+    await forgetPage.enterNewPassword('1234567890');
+    await forgetPage.enterConfirmPassword('1234567890');
+
+  // initially the inputs should be of type password
+  await forgetPage.expectNewPasswordType('password');
+  await forgetPage.expectConfirmPasswordType('password');
+
+  // toggle to show
+  await forgetPage.toggleNewPasswordVisibility();
+  await forgetPage.expectNewPasswordType('text');
+
+  await forgetPage.toggleConfirmPasswordVisibility();
+  await forgetPage.expectConfirmPasswordType('text');
+
+  // toggle back to hide
+  await forgetPage.toggleNewPasswordVisibility();
+  await forgetPage.expectNewPasswordType('password');
+
+  await forgetPage.toggleConfirmPasswordVisibility();
+  await forgetPage.expectConfirmPasswordType('password');
+  });
 });
