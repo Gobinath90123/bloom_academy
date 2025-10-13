@@ -81,5 +81,4 @@ test.describe('Login Tests', () => {
     await loginPage.clickLoginButton();
     await loginPage.verifyMandatoryFieldError(loginPage.usernameField);
   });
-
 });
