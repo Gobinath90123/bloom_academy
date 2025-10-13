@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="4.532551">
+<testsuite name="Login.test.ts" timestamp="2025-10-13T04:44:52.051Z" hostname="chrome" tests="1" failures="0" skipped="0" time="2.494" errors="0">
+<testcase name="Verify login to Blooms Career using POM" classname="Login.test.ts" time="2.494">
+</testcase>
+</testsuite>
+</testsuites>
