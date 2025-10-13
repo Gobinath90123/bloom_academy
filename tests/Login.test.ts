@@ -2,8 +2,86 @@ import { test } from '@playwright/test';
 import { LoginPage } from '../pages/Loginpage';
 import { testData } from '../test-data/testData';
 
-test('Verify login to Blooms Career using POM', async ({ page }) => {
-  const loginPage = new LoginPage(page);
-  await loginPage.navigateTo('https://staging.bloomscareer.com/login');
-  await loginPage.login(testData.username, testData.password);
+
+test.describe('TestCase: Verify Login with Invalid Password', () => {
+
+   test('Login with valid username and password', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.verifyLoginPageElements();
+    await loginPage.login(testData.validUser.username, testData.validUser.password);
+  });
+
+  test('Login attempt with valid username and invalid password', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername(testData.validUser.username);
+    await loginPage.enterPassword(testData.invalidUser.password);
+    await loginPage.clickLoginButton();
+    await loginPage.verifyInvalidLogin();
+  });
+
+    test('Login attempt with Invalid Mobile and valid password', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername(testData.invalidUser.username);
+    await loginPage.enterPassword(testData.validUser.password);
+    await loginPage.clickLoginButton();
+    await loginPage.verifyInvalidLogin();
+  });
+
+  test('Verify Login with Invalid Mobile/Email and valid password', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername(testData.invalidUser.username2);
+    await loginPage.enterPassword(testData.validUser.password);
+    await loginPage.clickLoginButton();
+    await loginPage.verifyInvalidLoginMessage();
+  });
+
+  
+  test('Verify Mandatory Fields Validation', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername('');
+    await loginPage.enterPassword('');
+    await loginPage.clickLoginButton();
+    await loginPage.verifyMandatoryFieldError(loginPage.usernameField);
+    await loginPage.verifyMandatoryFieldError(loginPage.passwordField);
+  });
+
+  test('Verify Forgot Password Link', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.clickForgotPassword();
+    await loginPage.verifyHeading('Forgot Password');
+  });
+
+    test('Verify Sign Up Link', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.clickSignUp();
+    await loginPage.verifyHeading('Register');
+  });
+
+    test('Verify Login with Invalid Mobile/Email and without entering password', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername(testData.invalidUser.username);
+    await loginPage.enterPassword('');
+    await loginPage.clickLoginButton();
+    await loginPage.verifyMandatoryFieldError(loginPage.passwordField);
+  });
+
+  test('Verify Login with valid Password and without entering Email', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.navigateTo(testData.url);
+    await loginPage.enterUsername('');
+    await loginPage.enterPassword(testData.validUser.password);
+    await loginPage.clickLoginButton();
+    await loginPage.verifyMandatoryFieldError(loginPage.usernameField);
+  });
+
 });
+
+
