@@ -11,6 +11,7 @@ export class LoginPage extends BasePage {
   private forgotPasswordLink = 'Forgot Password?';
   private errorMessageInvalid = 'Please enter valid login';
   private signUpLink = 'Sign Up';
+  private togglePasswordButton = 'button[aria-label="toggle password visibility"]';
 
   constructor(page: any) {
     super(page);
@@ -70,14 +71,6 @@ export class LoginPage extends BasePage {
    async verifyInvalidLoginMessage() {
     await expect(this.page.getByRole('status')).toBeVisible();
   }
-
-  //  async verifyMandatoryFieldError() {
-  //   const actualErrorMessage = await this.page.getByRole('textbox', { name: this.usernameField }).evaluate(
-  //     (el: any) => el.validationMessage
-  //   );
-  //   console.log(`📋 Actual error message: "${actualErrorMessage}"`);
-  //   await expect(actualErrorMessage).toBe('Please fill out this field.');
-  // }
 
   async verifyMandatoryFieldError(fieldName: string) {
   const field = this.page.getByRole('textbox', { name: fieldName });
