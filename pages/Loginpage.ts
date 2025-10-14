@@ -1,5 +1,6 @@
 import { BasePage } from './Basepage';
 import { expect } from '@playwright/test';
+import { DashboardPage } from './DashboardPage';
 
 export class LoginPage extends BasePage {
   public usernameField = 'Mobile No / Email ID *';
@@ -70,6 +71,11 @@ export class LoginPage extends BasePage {
 
    async verifyInvalidLoginMessage() {
     await expect(this.page.getByRole('status')).toBeVisible();
+  }
+
+
+  getDashboardPage() {
+    return new DashboardPage(this.page);
   }
 
   async verifyMandatoryFieldError(fieldName: string) {

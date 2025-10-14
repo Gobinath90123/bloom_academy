@@ -103,9 +103,34 @@ export class ForgetPage extends BasePage {
   }
 
   async verifyMandatoryFieldError(fieldName: string) {
-  const field = this.page.getByRole('textbox', { name: fieldName });
-  const actualErrorMessage = await field.evaluate((el: HTMLInputElement) => el.validationMessage);
-  console.log(`📋 Actual error message for "${fieldName}": "${actualErrorMessage}"`);
-  await expect(actualErrorMessage).toBe('Please fill out this field.');
-}
+    const field = this.page.getByRole('textbox', { name: fieldName });
+    const actualErrorMessage = await field.evaluate((el: HTMLInputElement) => el.validationMessage);
+    console.log(`📋 Actual error message for "${fieldName}": "${actualErrorMessage}"`);
+    await expect(actualErrorMessage).toBe('Please fill out this field.');
+  }
+
+  async toggleNewPasswordVisibility() {
+    await this.page.locator("(//button[@type='button'])[1]").click();
+  }
+
+  async toggleConfirmPasswordVisibility() {
+    await this.page.locator("(//button[@type='button'])[2]").click();
+  }
+
+  // --- Helpers for password visibility checks ---
+  async getNewPasswordType(): Promise<string | null> {
+    return this.newPasswordInput.getAttribute('type');
+  }
+
+  async getConfirmPasswordType(): Promise<string | null> {
+    return this.confirmPasswordInput.getAttribute('type');
+  }
+
+  async expectNewPasswordType(expected: 'text' | 'password') {
+    await expect(this.newPasswordInput).toHaveAttribute('type', expected);
+  }
+
+  async expectConfirmPasswordType(expected: 'text' | 'password') {
+    await expect(this.confirmPasswordInput).toHaveAttribute('type', expected);
+  }
 }

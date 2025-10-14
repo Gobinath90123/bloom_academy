@@ -3,6 +3,8 @@ export const testData = {
   validUser: {
     username: '9952234924',
     password: '12345',
+    name: 'Yazhini',
+    role: 'Other Profession',
   },
   invalidUser: {
     username: '9789440594',
