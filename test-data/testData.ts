@@ -18,5 +18,12 @@ export const testData = {
   sectionData: {
     mockTestSectionName: 'Entrance Examinations',
     //mockTestSectionName: 'Entrance Examinations',
+  },
+
+  ExamData: {
+    PageName: 'Exam Updates',
+    tabName : 'Competitive Examinations',
+    CategoryName: 'Previous Exam Previous Exam',
+    SubCategoryName: 'AFTER DIPLOMA',
   }
 };
