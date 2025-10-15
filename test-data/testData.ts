@@ -17,7 +17,7 @@ export const testData = {
   },
   sectionData: {
     mockTestSectionName: 'Entrance Examinations',
-    //mockTestSectionName: 'Entrance Examinations',
+    answeroptionIndex: 2,
   },
 
   ExamData: {

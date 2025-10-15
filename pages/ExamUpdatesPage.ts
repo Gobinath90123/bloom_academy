@@ -8,7 +8,8 @@ export class ExamUpdatesPage extends BasePage {
     bannerExamLink: "role=banner >> role=link[name='Exam Updates']",
     categoryButton: (name: string) => `role=button[name='${name}']`,
     gridContainer: "xpath=//div[contains(@class, 'relative overflow-hidden')]",
-    gridTitle: "div//h3",
+    // scoped from grid container; use xpath to avoid CSS parsing errors
+    gridTitle: "xpath=.//div//h3",
     sectionCard: "xpath=//div[contains(@class, 'bg-white') and contains(@class, 'rounded-xl')]",
     examDateRel: "xpath=.//span[contains(., 'Exam Date')]//p",
     headingByName: (name: string) => `role=heading[name='${name}']`,

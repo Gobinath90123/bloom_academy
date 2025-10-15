@@ -7,6 +7,7 @@ const baseURL = process.env.BASE_URL;
 test.describe('Mock Test', () => {
     let loginPage: LoginPage;
     let mockTestPage: MockTestPage;
+    const sectionName = testData.sectionData;
     const runMockTestFlow = async (page: any, pageObj: MockTestPage, sectionName: string, action: 'Skip' | 'Continue', optionIndex = 1) => {
         await expect(page.getByRole('link', { name: 'Mock Test' })).toBeVisible();
         await pageObj.goto();
@@ -45,12 +46,10 @@ test.describe('Mock Test', () => {
     });
 
     test('Take first test and skip all questions and submit', async ({ page }) => {
-        const sectionName = testData.sectionData.mockTestSectionName;
-        await runMockTestFlow(page, mockTestPage, sectionName, 'Skip', 3);
+        await runMockTestFlow(page, mockTestPage, sectionName.mockTestSectionName, 'Skip', sectionName.answeroptionIndex);
     });
 
     test('Answer all questions dynamically and submit', async ({ page }) => {
-        const sectionName = testData.sectionData.mockTestSectionName;
-        await runMockTestFlow(page, mockTestPage, sectionName, 'Continue', 3);
+        await runMockTestFlow(page, mockTestPage, sectionName.mockTestSectionName, 'Continue', sectionName.answeroptionIndex);
     });
 });
