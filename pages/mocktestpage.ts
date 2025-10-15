@@ -58,34 +58,154 @@ export class MockTestPage {
 
     }
 
-    async skipAllQuestionsAndSubmit() {
+    // async skipAllQuestionsAndSubmit(action: string, optionIndex: number) {
+    //     for (let i = 0; i < 200; i++) {
+    //         switch (action.toLowerCase()) {
+    //             case 'skip': {
+    //                 const container = this.page.getByRole('button', { name: 'Skip' });
+    //                 await container.evaluate((el) => {
+    //                     el.scrollTop = el.scrollHeight; // scroll to bottom of container
+    //                 });
+    //                 const skipBtn = this.page.getByRole('button', { name: 'Skip' });
+    //                 if (await skipBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+    //                     await skipBtn.click();
+    //                 } else {
+    //                     i = 100; // exit loop
+    //                 }
+    //                 break;
+    //             }
+    //             case 'continue': {
+    //                 const options = ['1', '2', '3', '4'];
+    //                 let clicked = false;
+    //                 const tryOrder = [
+    //                     options[optionIndex - 1], // user-selected (1-based)
+    //                     ...options.filter((_, idx) => idx !== optionIndex - 1)
+    //                 ];
+    //                 for (const opt of tryOrder) {
+    //                     const optBtn = this.page.locator(
+    //                         "(//div[contains(@class, 'flex flex-col gap-4 mb-6')]/button/span[contains(@class, 'font-bold')])[" + opt + "]"
+    //                     );
+    //                     if (await optBtn.isVisible({ timeout: 000 }).catch(() => false)) {
+    //                         await optBtn.click();
+    //                         clicked = true;
+    //                         break;
+    //                     }
+    //                 }
+    //                 if (clicked) {
+    //                     const container = this.page.getByRole('button', { name: 'Skip' });
+    //                     await container.evaluate((el) => {
+    //                         el.scrollTop = el.scrollHeight; // scroll to bottom of container
+    //                     });
+    //                     const continueBtn = this.page.getByRole('button', { name: 'Continue →' });
+    //                     if (await continueBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+    //                         await continueBtn.click();
+    //                     }
+    //                 } else {
+    //                     i = 100; // exit loop if no option found
+    //                 }
+    //                 break;
+    //             }
+    //             default:
+    //                 throw new Error(`Unknown action: ${action}`);
+    //         }
 
-        const container = this.page.getByRole('button', { name: 'Skip' });
-        await container.evaluate((el) => {
-            el.scrollTop = el.scrollHeight; // scroll to bottom of container
-        });
+    //         // Check if Submit button is visible to break early
+    //         const submitBtn = this.page.getByRole('button', { name: 'Submit' });
+    //         if (await submitBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
+    //             break;
+    //         }
+    //     }
 
-        for (let i = 0; i < 100; i++) {
-            
-            const skipBtn = this.page.getByRole('button', { name: 'Skip' });
-            if (await skipBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-                await skipBtn.click();
+    //     // Submit flow
+    //     await expect(this.page.getByRole('button', { name: 'Submit' })).toBeVisible();
+    //     await this.page.getByRole('button', { name: 'Submit' }).click();
+    //     await expect(this.page.getByRole('heading', { name: 'Alert!' })).toBeVisible();
+    //     await expect(this.page.getByRole('button', { name: 'Submit →' })).toBeVisible();
+    //     await this.page.getByRole('button', { name: 'Submit →' }).click();
+    //     await expect(this.page.getByRole('heading', { name: 'Success!' })).toBeVisible();
+    //     await expect(this.page.getByText('Your test has been submitted')).toBeVisible();
+    //     await expect(this.page.getByRole('button', { name: 'Go to Dashboard' })).toBeVisible();
+    //     await this.page.getByRole('button', { name: 'Go to Dashboard' }).click();
+    //     await expect(this.page.getByRole('link', { name: 'Dashboard' })).toBeVisible();
+    // }
+
+    async printTextByLocator(locatorStr: string) {
+        const locator = this.page.locator(locatorStr);
+        await expect(locator).toBeVisible();
+        const text = await locator.innerText();
+        await this.page.waitForTimeout(2000);
+        console.log(`Text for given Locator: ${text}`);
+    }
+
+
+
+    async allQuestionsAndSubmit(action: string, optionIndex: number) {
+        const skipBtn = this.page.getByRole('button', { name: 'Skip' });
+        const continueBtn = this.page.getByRole('button', { name: 'Continue →' });
+        const submitBtn = this.page.getByRole('button', { name: 'Submit' });
+
+        for (let i = 0; i < 200; i++) {
+            // Early exit if Submit is visible
+            if (await submitBtn.isVisible({ timeout: 1000 }).catch(() => false)) break;
+            const element = this.page.locator("//div[@class='text-lg font-semibold']");
+            const text = await element.innerText();
+            console.log('Question:', text.trim());
+            // Always scroll to bottom before each action
+            await skipBtn.evaluate((el) => {
+                el.scrollTop = el.scrollHeight; // scroll to bottom of container
+            });
+            if (action.toLowerCase() === 'skip') {
+                if (await skipBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+                    await skipBtn.click();
+                } else {
+                    break;
+                }
+            } else if (action.toLowerCase() === 'continue') {
+                const options = ['1', '2', '3', '4'];
+                const tryOrder = [
+                    options[optionIndex - 1],
+                    ...options.filter((_, idx) => idx !== optionIndex - 1)
+                ];
+                let clicked = false;
+                for (const opt of tryOrder) {
+
+                    const optBtn = this.page.locator(
+                        "(//div[contains(@class, 'flex flex-col gap-4 mb-6')]/button/span[contains(@class, 'font-bold')])[" + opt + "]"
+                    );
+                    if (await optBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+                        await optBtn.click();
+                        const option = await optBtn.innerText();
+                        console.log('Answer:', option.trim());
+                        clicked = true;
+                        break;
+                    }
+                }
+                // Scroll again before clicking Continue
+                await skipBtn.evaluate((el) => {
+                    el.scrollTop = el.scrollHeight;
+                }); 
+                if (clicked && await continueBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+                    await continueBtn.click();
+                } else if (!clicked) {
+                    break;
+                }
             } else {
-                break;
+                throw new Error(`Unknown action: ${action}`);
             }
         }
+
         // Submit flow
-        await this.page.waitForTimeout(2000); // waits for 2 seconds
-        await expect(this.page.getByRole('button', { name: 'Submit' })).toBeVisible();
-        await this.page.getByRole('button', { name: 'Submit' }).click();
+        await expect(submitBtn).toBeVisible();
+        await submitBtn.click();
         await expect(this.page.getByRole('heading', { name: 'Alert!' })).toBeVisible();
-        await expect(this.page.getByRole('button', { name: 'Submit →' })).toBeVisible();
-        await this.page.getByRole('button', { name: 'Submit →' }).click();
+        const submitConfirmBtn = this.page.getByRole('button', { name: 'Submit →' });
+        await expect(submitConfirmBtn).toBeVisible();
+        await submitConfirmBtn.click();
         await expect(this.page.getByRole('heading', { name: 'Success!' })).toBeVisible();
         await expect(this.page.getByText('Your test has been submitted')).toBeVisible();
-        await expect(this.page.getByRole('button', { name: 'Go to Dashboard' })).toBeVisible();
-        await this.page.waitForTimeout(2000); // waits for 2 seconds
-        await this.page.getByRole('button', { name: 'Go to Dashboard' }).click();
+        const dashboardBtn = this.page.getByRole('button', { name: 'Go to Dashboard' });
+        await expect(dashboardBtn).toBeVisible();
+        await dashboardBtn.click();
         await expect(this.page.getByRole('link', { name: 'Dashboard' })).toBeVisible();
     }
 }

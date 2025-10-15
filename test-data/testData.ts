@@ -16,6 +16,7 @@ export const testData = {
     password: '123456',
   },
   sectionData: {
-    mockTestSectionName: 'Aptitude',
+    mockTestSectionName: 'Entrance Examinations',
+    //mockTestSectionName: 'Entrance Examinations',
   }
 };
