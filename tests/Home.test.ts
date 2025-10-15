@@ -10,7 +10,6 @@ test.describe('Home Tests', () => {
         await loginPage.login(testData.validUser.username, testData.validUser.password);
         const dashboardPage = loginPage.getDashboardPage();
         await dashboardPage.expectRoleVisible('heading', 'Dashboard');
-
     });
 
     test('Verify Home Page Navigation', async ({ page }) => {

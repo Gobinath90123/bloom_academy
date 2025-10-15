@@ -1,59 +1,6 @@
-<testsuites id="" name="" tests="18" failures="0" skipped="0" errors="0" time="61.552913999999994">
-<testsuite name="Forget.test.ts" timestamp="2025-10-13T08:39:27.315Z" hostname="chrome" tests="9" failures="0" skipped="0" time="43.527" errors="0">
-<testcase name="Forget Tests › Verify Forgot Password Page Navigation" classname="Forget.test.ts" time="2.241">
-</testcase>
-<testcase name="Forget Tests › Verify Mandatory Mobile Field" classname="Forget.test.ts" time="2.302">
-<system-out>
-<![CDATA[📋 Actual error message for "Mobile Number": "Please fill out this field."
-]]>
-</system-out>
-</testcase>
-<testcase name="Forget Tests › Verify Invalid Mobile Number" classname="Forget.test.ts" time="1.879">
-</testcase>
-<testcase name="Forget Tests › Verify Valid Mobile Number OTP" classname="Forget.test.ts" time="6.631">
-</testcase>
-<testcase name="Forget Tests › Verify Back to Login Link" classname="Forget.test.ts" time="2.895">
-</testcase>
-<testcase name="Forget Tests › Verify Mandatory Password Fields" classname="Forget.test.ts" time="6.672">
-</testcase>
-<testcase name="Forget Tests › Verify Password Minimum Length" classname="Forget.test.ts" time="6.967">
-</testcase>
-<testcase name="Forget Tests › Verify Password and Confirm Password Match" classname="Forget.test.ts" time="6.872">
-</testcase>
-<testcase name="Forget Tests › Verify Successful Password Set" classname="Forget.test.ts" time="7.068">
-</testcase>
-</testsuite>
-<testsuite name="Login.test.ts" timestamp="2025-10-13T08:39:27.315Z" hostname="chrome" tests="9" failures="0" skipped="0" time="15.075" errors="0">
-<testcase name="Login Tests › Login with valid username and password" classname="Login.test.ts" time="1.773">
-</testcase>
-<testcase name="Login Tests › Login attempt with valid username and invalid password" classname="Login.test.ts" time="1.477">
-</testcase>
-<testcase name="Login Tests › Login attempt with Invalid Mobile and valid password" classname="Login.test.ts" time="1.639">
-</testcase>
-<testcase name="Login Tests › Verify Login with Invalid Mobile/Email and valid password" classname="Login.test.ts" time="1.302">
-</testcase>
-<testcase name="Login Tests › Verify Mandatory Fields Validation" classname="Login.test.ts" time="1.687">
-<system-out>
-<![CDATA[📋 Actual error message for "Mobile No / Email ID *": "Please fill out this field."
-📋 Actual error message for "Password *": "Please fill out this field."
-]]>
-</system-out>
-</testcase>
-<testcase name="Login Tests › Verify Forgot Password Link" classname="Login.test.ts" time="1.454">
-</testcase>
-<testcase name="Login Tests › Verify Sign Up Link" classname="Login.test.ts" time="2.669">
-</testcase>
-<testcase name="Login Tests › Verify Login with Invalid Mobile/Email and without entering password" classname="Login.test.ts" time="1.604">
-<system-out>
-<![CDATA[📋 Actual error message for "Password *": "Please fill out this field."
-]]>
-</system-out>
-</testcase>
-<testcase name="Login Tests › Verify Login with valid Password and without entering Email" classname="Login.test.ts" time="1.47">
-<system-out>
-<![CDATA[📋 Actual error message for "Mobile No / Email ID *": "Please fill out this field."
-]]>
-</system-out>
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="13.196649000000209">
+<testsuite name="mock.test.ts" timestamp="2025-10-14T15:18:58.185Z" hostname="chrome" tests="1" failures="0" skipped="0" time="10.174" errors="0">
+<testcase name="Mock Test › Take first test and skip all questions" classname="mock.test.ts" time="10.174">
 </testcase>
 </testsuite>
 </testsuites>

@@ -9,12 +9,13 @@ export const testData = {
   invalidUser: {
     username: '9789440594',
     username2: 'abcd',
-    password: 'abcd', 
+    password: 'abcd',
   },
   paymentnonpaymentUser: {
-    username: '8870319424',
+    username: '8870319426',
     password: '123456',
   },
-
-
+  sectionData: {
+    mockTestSectionName: 'Aptitude',
+  }
 };
