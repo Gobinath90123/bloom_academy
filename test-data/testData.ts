@@ -25,5 +25,14 @@ export const testData = {
     tabName : 'Competitive Examinations',
     CategoryName: 'Previous Exam Previous Exam',
     SubCategoryName: 'AFTER DIPLOMA',
+  },
+
+  StudyMaterialData:{
+    tabName: 'CURRENT AFFAIRS',
+    sectionName: 'OCTOBER 2024 CURRENT AFFAIRS',
+    downloadButton: 'Download',
+  },
+  CollegeInfoData:{
+    CategoryName: 'KARNATAKA',
   }
 };
