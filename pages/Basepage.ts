@@ -1,10 +1,12 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 
 export class BasePage {
   protected page: Page;
+  readonly copyrightText: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.copyrightText = page.getByText('© Tuluk Career Consultancy');
   }
 
   // Navigate to any URL
@@ -34,6 +36,11 @@ export class BasePage {
   // Click element by text
   async clickByText(text: string) {
     await this.page.getByText(text).click();
+  }
+
+   async scrollToFooter() {
+    await this.copyrightText.scrollIntoViewIfNeeded();
+    await expect(this.copyrightText).toBeVisible();
   }
 
   // Verify text is visible

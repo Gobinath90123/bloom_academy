@@ -41,5 +41,7 @@ export const testData = {
     sectionName: 'CLAT',
     downloadButton: 'Download',
   },
-
+  SubscribetoNewsLetterData:{
+    email: 'test2025@yopmail.com',
+}
 };
