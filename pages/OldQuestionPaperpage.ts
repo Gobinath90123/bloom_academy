@@ -1,25 +1,24 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { BasePage } from './Basepage';
 import path from 'path';
 import fs from 'fs';
+import { BasePage } from './Basepage';
 
-export class StudyMaterialPage extends BasePage {
-    readonly page: Page;
+export class OldQuestionPaperpage extends BasePage{
     readonly tabLocator: Locator;
     readonly sectionLocator: Locator;
     readonly collegeNameLocator: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.tabLocator = page.locator("//div[contains(@class, 'flex flex-wrap') and contains(@class, 'border-b')]//button");
+        this.tabLocator = page.locator("//div[@class='flex flex-wrap space-x-4 sm:space-x-8 border-b mb-6 overflow-x-auto']//button");
         this.sectionLocator = page.locator("//span[@class='z-10']");
         this.collegeNameLocator = page.locator("//td[@class='px-6 py-3'][2]");
     }
 
-    async printStudyMaterialTabTitles() {
+    async printOldQuestionPaperTabTitles() {
         await this.page.waitForTimeout(2000);
         const count = await this.tabLocator.count();
-        console.log(`Total Study Material Tab: ${count}`);
+        console.log(`Total Old Question Paper Tab: ${count}`);
         for (let i = 0; i < count; i++) {
             const title = await this.tabLocator.nth(i).innerText();
             console.log(`TabName ${i + 1} Title: ${title}`);
@@ -27,8 +26,9 @@ export class StudyMaterialPage extends BasePage {
     }
 
     async printAllSectionCardTitles() {
+        await this.page.waitForTimeout(1000);
         await this.page.evaluate(() => {
-            window.scrollBy(0, 1200); // scroll down 500px
+            window.scrollBy(0, 10000); // scroll down 500px
         });
         const sectionCount = await this.sectionLocator.count();
         for (let i = 0; i < sectionCount; i++) {

@@ -34,5 +34,12 @@ export const testData = {
   },
   CollegeInfoData:{
     CategoryName: 'KARNATAKA',
-  }
+  },
+
+  OldQuestionPaperData:{
+    tabName: 'ENTRANCE EXAMS',
+    sectionName: 'CLAT',
+    downloadButton: 'Download',
+  },
+
 };

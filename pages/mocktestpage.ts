@@ -1,6 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './Basepage';
 
-export class MockTestPage {
+export class MockTestPage extends BasePage {
   readonly page: Page;
   readonly sectionLocator: Locator;
   readonly cardLocator: Locator;
@@ -21,7 +22,7 @@ export class MockTestPage {
   };
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.sectionLocator = page.locator(this.selectors.section);
     this.cardLocator = page.locator(this.selectors.card);
     this.takeTestButton = page.locator(this.selectors.takeTestBtn);

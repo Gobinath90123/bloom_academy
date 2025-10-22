@@ -4,11 +4,9 @@ import { StudyMaterialPage } from '../pages/StudyMaterialpage';
 import { testData } from '../test-data/testData';
 import path from 'path';
 import fs from 'fs';
-const pdfParse = require('pdf-parse');
-
 const baseURL = process.env.BASE_URL;
 
-test.describe('Mock Test', () => {
+test.describe('StudyMaterial Functionality', () => {
     let loginPage: LoginPage;
     let studyMaterialPage: StudyMaterialPage;
     test.beforeEach(async ({ page }) => {
@@ -68,7 +66,13 @@ test.describe('Mock Test', () => {
         // Delete the file after use
         fs.unlinkSync(filePath);
         console.log(`🗑️ PDF deleted successfully: ${filePath}`);
+       
     });
 
-
+    test('Navigate to Study Material and click logout and again login and navigate to study material', async ({ page }) => {
+        await page.getByRole('button').filter({ hasText: /^$/ }).click();
+        await page.getByRole('button', { name: 'Logout' }).click();
+        await page.getByRole('button', { name: 'Yes' }).click();
+    });
+    
 });

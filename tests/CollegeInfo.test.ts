@@ -5,7 +5,7 @@ import { testData } from '../test-data/testData';
 
 const baseURL = process.env.BASE_URL;
 
-test.describe('Mock Test', () => {
+test.describe('CollegeInfo Functionality', () => {
     let loginPage: LoginPage;
     let collegeInfoPage: CollegeInfoPage;
 
