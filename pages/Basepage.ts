@@ -12,6 +12,11 @@ export class BasePage {
     await this.page.goto(url);
   }
 
+  // Backwards-compatible alias used across tests/pages
+  async navigateToExternal(url: string) {
+    await this.navigateTo(url);
+  }
+
   // Click element by role
   async clickByRole(role: string, name?: string | RegExp) {
     if (name) {
@@ -48,5 +53,14 @@ export class BasePage {
   // Wait for network idle
   async waitForLoad() {
     await this.page.waitForLoadState('networkidle');
+  }
+
+  // Wait for an element to be visible. Accepts a selector string or a Locator.
+  async waitForVisible(selectorOrLocator: string | ReturnType<Page['locator']>, timeout = 5000) {
+    if (typeof selectorOrLocator === 'string') {
+      await this.page.locator(selectorOrLocator).first().waitFor({ state: 'visible', timeout });
+    } else {
+      await selectorOrLocator.first().waitFor({ state: 'visible', timeout });
+    }
   }
 }

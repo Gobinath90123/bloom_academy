@@ -4,6 +4,7 @@ import { StudyMaterialPage } from '../pages/StudyMaterialpage';
 import { testData } from '../test-data/testData';
 import path from 'path';
 import fs from 'fs';
+//const pdfParse = require('pdf-parse');
 const baseURL = process.env.BASE_URL;
 
 test.describe('StudyMaterial Functionality', () => {
@@ -74,5 +75,5 @@ test.describe('StudyMaterial Functionality', () => {
         await page.getByRole('button', { name: 'Logout' }).click();
         await page.getByRole('button', { name: 'Yes' }).click();
     });
-    
+
 });

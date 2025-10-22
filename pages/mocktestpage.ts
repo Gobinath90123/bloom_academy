@@ -23,9 +23,9 @@ export class MockTestPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.sectionLocator = page.locator(this.selectors.section);
-    this.cardLocator = page.locator(this.selectors.card);
-    this.takeTestButton = page.locator(this.selectors.takeTestBtn);
+    this.sectionLocator = this.page.locator(this.selectors.section);
+    this.cardLocator = this.page.locator(this.selectors.card);
+    this.takeTestButton = this.page.locator(this.selectors.takeTestBtn);
   }
 
   async goto() {
@@ -47,14 +47,22 @@ export class MockTestPage extends BasePage {
     for (let i = 0; i < sectionCount; i++) {
       const section = this.sectionLocator.nth(i);
       const sectionTitle = await section.innerText();
+      await this.page.waitForTimeout(1000);
       console.log(`\nSection ${i + 1} Title: ${sectionTitle}`);
+      // ✅ Scroll the section into view before clicking
+      await section.scrollIntoViewIfNeeded();
+      await section.waitFor({ state: 'visible', timeout: 5000 });
       await section.click();
-      await this.page.waitForTimeout(500); // Wait for cards to load
+      await this.cardLocator.first().waitFor({ state: 'visible', timeout: 5000 });
       const cards = this.cardLocator;
       const cardCount = await cards.count();
       console.log(`Total cards found in "${sectionTitle}": ${cardCount}`);
+
       for (let j = 0; j < cardCount; j++) {
-        const cardTitle = await cards.nth(j).locator('.font-semibold').innerText();
+        const card = cards.nth(j);
+        await this.page.waitForTimeout(1000);
+
+        const cardTitle = await card.locator('.font-semibold').innerText();
         console.log(`Card ${j + 1} Title: ${cardTitle}`);
       }
     }
@@ -76,7 +84,7 @@ export class MockTestPage extends BasePage {
     const locator = this.page.locator(locatorStr);
     await expect(locator).toBeVisible();
     const text = await locator.innerText();
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForLoadState('networkidle');
     console.log(`Text for given Locator: ${text}`);
   }
 
@@ -150,7 +158,7 @@ export class MockTestPage extends BasePage {
     await expect(alertLocator).toBeVisible();
     const alertText = await alertLocator.innerText();
 
-    await this.page.waitForTimeout(500);
+    await this.page.waitForLoadState('networkidle');
     const questionsLocator = this.page.locator(this.selectors.questionsSummary);
     let questionsAnswered = '';
     if (await questionsLocator.count() > 0) {

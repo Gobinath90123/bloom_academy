@@ -19,7 +19,7 @@ export class HomePage extends BasePage {
   }
 
   async navigateToExternal(url: string) {
-    await this.page.goto(url);
+    await this.navigateTo(url);
   }
 
   async expectCareerSectionHeadings() {
