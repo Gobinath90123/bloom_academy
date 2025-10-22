@@ -40,6 +40,7 @@ test.describe('Forget Tests', () => {
 
   test('Verify Mandatory Password Fields', async ({ page }) => {
     await forgetPage.completeOtpFlow('1234567890');
+    await page.waitForTimeout(2000);
     await expect(forgetPage.newPasswordInput).toBeVisible();
     await expect(forgetPage.confirmPasswordInput).toBeVisible();
     expect(await forgetPage.isResetDisabled()).toBeTruthy();

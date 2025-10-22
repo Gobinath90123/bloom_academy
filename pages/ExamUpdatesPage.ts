@@ -30,7 +30,7 @@ export class ExamUpdatesPage extends BasePage {
   }
 
   async navigateToExternal(url: string) {
-    await this.page.goto(url);
+    await this.navigateTo(url);
   }
 
   /**

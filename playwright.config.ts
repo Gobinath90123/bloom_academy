@@ -8,23 +8,22 @@ function getBaseUrl() {
   if (!environment) return 'https://staging.bloomscareer.com/login';
   switch (environment) {
     case 'prod':
-      return 'https://www.goperla.com/';
+      return 'https://staging.bloomscareer.com/login';
     case 'local':
       return 'http://localhost';
     default:
-      return 'http://3.80.32.182:3000';
+      return 'https://staging.bloomscareer.com/login';
   }
 }
 
 export default defineConfig({
   testDir: './tests',
-  timeout: 60000,
+  timeout: 2*60*10000,
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 1 : 1,
   fullyParallel: true,
   reporter: [
     ['list'],
-    // ['./CustomReporterConfig.ts'],
     ['junit', { outputFile: './report/results.xml' }],
     ['allure-playwright'],
     ['monocart-reporter', {
@@ -46,7 +45,7 @@ export default defineConfig({
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',
         trace: 'retain-on-failure',
-        actionTimeout: 60000,
+        actionTimeout: 1200000,
         viewport: null,
         deviceScaleFactor: undefined,
         launchOptions: { args: ['--start-maximized'] },

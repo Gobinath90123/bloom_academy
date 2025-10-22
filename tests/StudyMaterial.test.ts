@@ -4,7 +4,7 @@ import { StudyMaterialPage } from '../pages/StudyMaterialpage';
 import { testData } from '../test-data/testData';
 import path from 'path';
 import fs from 'fs';
-const pdfParse = require('pdf-parse');
+//const pdfParse = require('pdf-parse');
 
 const baseURL = process.env.BASE_URL;
 

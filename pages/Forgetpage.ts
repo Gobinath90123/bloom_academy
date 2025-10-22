@@ -44,6 +44,7 @@ export class ForgetPage extends BasePage {
   }
 
   async goToLogin() {
+    await this.page.waitForTimeout(2000);
     await this.loginLink.click();
   }
 
