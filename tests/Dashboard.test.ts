@@ -29,4 +29,14 @@ test.describe('Dashboard Tests', () => {
         await dashboardPage.expectTextVisible(`| ${username}`);
     });
 
+    test('Verify Attended Test Details', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.login(testData.validUser.username, testData.validUser.password);
+    const dashboardPage = loginPage.getDashboardPage();
+    await dashboardPage.expectRoleVisible('heading', 'Dashboard');
+    await expect(page.getByRole('heading', { name: 'Attended Mock Test Details' })).toBeVisible();
+    await page.getByRole('heading', { name: 'Attended Mock Test Details' }).click();
+    await expect(page.getByRole('textbox', { name: 'Search...' }).first()).toBeVisible();
+    await dashboardPage.clickSummaryLinkAndVerify();
+    });
 });
