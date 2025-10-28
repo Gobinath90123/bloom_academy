@@ -1,16 +1,20 @@
-import { expect } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { BasePage } from './Basepage';
 
+/**
+ * DashboardPage represents the dashboard page of the application
+ * Implements page object model pattern for test automation
+ */
 export class DashboardPage extends BasePage {
-  
-  constructor(page: any) {
+  constructor(page: Page) {
     super(page);
   }
 
-  // Verify all login page elements
-  
-getDashboardPage() {
-        // Replace with actual DashboardPage import and implementation
-        return new DashboardPage(this.page);
-    }
+  /**
+   * Add dashboard-specific methods here
+   * Example:
+   * async verifyDashboardElements(): Promise<void> {
+   *   await this.expectRoleVisible('heading', 'Dashboard');
+   * }
+   */
 }

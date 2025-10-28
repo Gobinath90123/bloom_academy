@@ -2,7 +2,6 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './Basepage';
 
 export class MockTestPage extends BasePage {
-  readonly page: Page;
   readonly sectionLocator: Locator;
   readonly cardLocator: Locator;
   readonly takeTestButton: Locator;

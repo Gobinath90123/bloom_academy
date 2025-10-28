@@ -1,9 +1,25 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,                             /*This is for "path" module import*/
-    "baseUrl": ".",                                      /* Specify the base directory to resolve non-relative module names. */
-    "paths": {                                           /* Specify a set of entries that re-map imports to additional lookup locations. */
-    }                             
-  }
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+    }
+  },
+  "include": [
+    "pages/**/*",
+    "tests/**/*",
+    "test-data/**/*",
+    "playwright.config.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
-

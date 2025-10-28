@@ -27,6 +27,7 @@ test.describe('Home Tests', () => {
         await exam.navigateToExternal('https://staging.bloomscareer.com/exam-updates');
         await exam.expectRoleVisible('heading',  ExamData.PageName);
         await expect(page.getByRole('link', { name: ExamData.tabName })).toBeVisible();
+        await page.getByRole('link', { name: ExamData.tabName }).click();
         await expect(page.getByRole('button', { name: 'Previous Exam Previous Exam' })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Latest Exam Latest Exam' })).toBeVisible();
 
@@ -39,6 +40,7 @@ test.describe('Home Tests', () => {
         await exam.navigateToExternal('https://staging.bloomscareer.com/exam-updates');
         await exam.expectRoleVisible('heading', ExamData.PageName);
         await expect(page.getByRole('link', { name: ExamData.tabName })).toBeVisible();
+        await page.getByRole('link', { name: ExamData.tabName }).click();
         await exam.openCategory(ExamData.CategoryName);
         await page.waitForTimeout(2000);
         const titles = await exam.getCategoryExamTitles();
@@ -55,6 +57,7 @@ test.describe('Home Tests', () => {
         await exam.navigateToExternal('https://staging.bloomscareer.com/exam-updates');
         await exam.expectRoleVisible('heading', ExamData.PageName);
         await expect(page.getByRole('link', { name: ExamData.tabName })).toBeVisible();
+        await page.getByRole('link', { name: ExamData.tabName }).click();
         await exam.openCategory(ExamData.CategoryName);
         await exam.openSubCategory(ExamData.SubCategoryName);
         const cards = await exam.getSectionCards();

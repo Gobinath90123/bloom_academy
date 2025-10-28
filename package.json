@@ -14,7 +14,11 @@
     "allure:reports": "npm run allure-generate && allure serve",
     "allure:chrome": "npm run allure:clean && npm run test:chrome && npm run allure-generate && npm run allure:reports",
     "allure:html": "allure generate --single-file ./allure-results",
-    "test": "npx cross-env ENV=stage MODULE=tenant npx playwright test --grep @Tenant --headed"
+    "test": "npx cross-env ENV=stage MODULE=tenant npx playwright test --grep @Tenant --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "lint": "npx eslint pages tests",
+    "format": "npx prettier --write pages tests"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +30,9 @@
     "allure-playwright": "^3.4.1",
     "monocart-reporter": "^2.9.23",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

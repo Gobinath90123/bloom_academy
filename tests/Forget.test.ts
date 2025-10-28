@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { ForgetPage } from '../pages/Forgetpage';
 import { LoginPage } from '../pages/Loginpage';
 
-test.describe('Forget Tests', () => {
+test.describe('Forget Password Tests', () => {
   let forgetPage: ForgetPage;
 
   test.beforeEach(async ({ page }) => {
@@ -19,12 +19,12 @@ test.describe('Forget Tests', () => {
   test('Verify Mandatory Mobile Field', async ({ page }) => {
     await forgetPage.sendOtp();
     await forgetPage.verifyMandatoryFieldError('Mobile Number');
-    });
+  });
 
   test('Verify Invalid Mobile Number', async ({ page }) => {
     await forgetPage.fillMobile('123456');
     await forgetPage.sendOtp();
-    await expect(page.getByText('Mobile number must be 10')).toBeVisible();
+    await expect(forgetPage.getByText('Mobile number must be 10')).toBeVisible();
   });
 
   test('Verify Valid Mobile Number OTP', async ({ page }) => {
@@ -36,14 +36,15 @@ test.describe('Forget Tests', () => {
 
   test('Verify Back to Login Link', async ({ page }) => {
     await forgetPage.goToLogin();
-    });
+  });
 
   test('Verify Mandatory Password Fields', async ({ page }) => {
     await forgetPage.completeOtpFlow('1234567890');
     await page.waitForTimeout(2000);
     await expect(forgetPage.newPasswordInput).toBeVisible();
     await expect(forgetPage.confirmPasswordInput).toBeVisible();
-    expect(await forgetPage.isResetDisabled()).toBeTruthy();
+    const isDisabled = await forgetPage.isResetDisabled();
+    expect(isDisabled).toBeTruthy();
   });
 
   test('Verify Password Minimum Length', async ({ page }) => {
@@ -51,14 +52,14 @@ test.describe('Forget Tests', () => {
     await forgetPage.enterNewPassword('12345');
     await forgetPage.enterConfirmPassword('12345');
     await forgetPage.clickResetPassword();
-    await expect(page.getByText('Password must be at least 6 characters.')).toBeVisible();
+    await expect(forgetPage.getByText('Password must be at least 6 characters.')).toBeVisible();
   });
 
   test('Verify Password and Confirm Password Match', async ({ page }) => {
     await forgetPage.completeOtpFlow('1234567890');
     await forgetPage.enterNewPassword('1234567890');
     await forgetPage.enterConfirmPassword('123456789');
-    await expect(page.getByText('Passwords do not match')).toBeVisible();
+    await expect(forgetPage.getByText('Passwords do not match')).toBeVisible();
   });
 
   test('Verify Successful Password Set', async ({ page }) => {
@@ -74,22 +75,22 @@ test.describe('Forget Tests', () => {
     await forgetPage.enterNewPassword('1234567890');
     await forgetPage.enterConfirmPassword('1234567890');
 
-  // initially the inputs should be of type password
-  await forgetPage.expectNewPasswordType('password');
-  await forgetPage.expectConfirmPasswordType('password');
+    // initially the inputs should be of type password
+    await forgetPage.expectNewPasswordType('password');
+    await forgetPage.expectConfirmPasswordType('password');
 
-  // toggle to show
-  await forgetPage.toggleNewPasswordVisibility();
-  await forgetPage.expectNewPasswordType('text');
+    // toggle to show
+    await forgetPage.toggleNewPasswordVisibility();
+    await forgetPage.expectNewPasswordType('text');
 
-  await forgetPage.toggleConfirmPasswordVisibility();
-  await forgetPage.expectConfirmPasswordType('text');
+    await forgetPage.toggleConfirmPasswordVisibility();
+    await forgetPage.expectConfirmPasswordType('text');
 
-  // toggle back to hide
-  await forgetPage.toggleNewPasswordVisibility();
-  await forgetPage.expectNewPasswordType('password');
+    // toggle back to hide
+    await forgetPage.toggleNewPasswordVisibility();
+    await forgetPage.expectNewPasswordType('password');
 
-  await forgetPage.toggleConfirmPasswordVisibility();
-  await forgetPage.expectConfirmPasswordType('password');
+    await forgetPage.toggleConfirmPasswordVisibility();
+    await forgetPage.expectConfirmPasswordType('password');
   });
 });

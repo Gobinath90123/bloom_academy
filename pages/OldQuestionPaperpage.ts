@@ -10,9 +10,9 @@ export class OldQuestionPaperpage extends BasePage{
 
     constructor(page: Page) {
         super(page);
-        this.tabLocator = page.locator("//div[@class='flex flex-wrap space-x-4 sm:space-x-8 border-b mb-6 overflow-x-auto']//button");
-        this.sectionLocator = page.locator("//span[@class='z-10']");
-        this.collegeNameLocator = page.locator("//td[@class='px-6 py-3'][2]");
+        this.tabLocator = this.page.locator("//div[@class='flex flex-wrap space-x-4 sm:space-x-8 border-b mb-6 overflow-x-auto']//button");
+        this.sectionLocator = this.page.locator("//span[@class='z-10']");
+        this.collegeNameLocator = this.page.locator("//td[@class='px-6 py-3'][2]");
     }
 
     async printOldQuestionPaperTabTitles() {
@@ -46,6 +46,4 @@ export class OldQuestionPaperpage extends BasePage{
             }
         }
     }
-
- 
-};
+}

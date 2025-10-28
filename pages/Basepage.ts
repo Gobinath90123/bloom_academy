@@ -1,66 +1,122 @@
-import { Page, expect } from '@playwright/test';
+import { Page, expect, Locator } from '@playwright/test';
 
-export class BasePage {
+/**
+ * BasePage class provides common functionality for all page objects
+ * Following DRY principle by centralizing common interactions
+ */
+export abstract class BasePage {
   protected page: Page;
 
   constructor(page: Page) {
     this.page = page;
   }
 
-  // Navigate to any URL
-  async navigateTo(url: string) {
+  /**
+   * Navigates to the specified URL
+   * @param url The URL to navigate to
+   */
+  async navigateTo(url: string): Promise<void> {
     await this.page.goto(url);
   }
 
-  // Backwards-compatible alias used across tests/pages
-  async navigateToExternal(url: string) {
-    await this.navigateTo(url);
+  /**
+   * Clicks an element identified by role
+   * @param role The ARIA role of the element
+   * @param name Optional name of the element
+   */
+  async clickByRole(role: string, name?: string | RegExp): Promise<void> {
+    const locator = name 
+      ? this.page.getByRole(role as any, { name })
+      : this.page.getByRole(role as any);
+    await locator.click();
   }
 
-  // Click element by role
-  async clickByRole(role: string, name?: string | RegExp) {
-    if (name) {
-      await this.page.getByRole(role as any, { name }).click();
-    } else {
-      await this.page.getByRole(role as any).click();
-    }
-  }
-
-  // Fill input by role
-  async fillByRole(role: string, name: string | RegExp, value: string) {
+  /**
+   * Fills an input field identified by role
+   * @param role The ARIA role of the input element
+   * @param name The name of the input element
+   * @param value The value to fill
+   */
+  async fillByRole(role: string, name: string | RegExp, value: string): Promise<void> {
     await this.page.getByRole(role as any, { name }).fill(value);
   }
 
-  // Click element by text
-  async clickByText(text: string) {
+  /**
+   * Clicks an element identified by text
+   * @param text The text content of the element
+   */
+  async clickByText(text: string): Promise<void> {
     await this.page.getByText(text).click();
   }
 
-  // Verify text is visible
-  async expectTextVisible(text: string) {
+  /**
+   * Verifies that text is visible on the page
+   * @param text The text to verify
+   */
+  async expectTextVisible(text: string): Promise<void> {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 
-  // Verify element by role is visible
-  async expectRoleVisible(role: string, name?: string | RegExp) {
-    if (name) {
-      await expect(this.page.getByRole(role as any, { name })).toBeVisible();
-    } else {
-      await expect(this.page.getByRole(role as any)).toBeVisible();
-    }
+  /**
+   * Verifies that an element identified by role is visible
+   * @param role The ARIA role of the element
+   * @param name Optional name of the element
+   */
+  async expectRoleVisible(role: string, name?: string | RegExp): Promise<void> {
+    const locator = name
+      ? this.page.getByRole(role as any, { name })
+      : this.page.getByRole(role as any);
+    await expect(locator).toBeVisible();
   }
 
-  // Wait for network idle
-  async waitForLoad() {
+  /**
+   * Waits for the page to reach network idle state
+   */
+  async waitForLoad(): Promise<void> {
     await this.page.waitForLoadState('networkidle');
   }
 
-  // Wait for an element to be visible. Accepts a selector string or a Locator.
-  async waitForVisible(selectorOrLocator: string | ReturnType<Page['locator']>, timeout = 5000) {
-    if (typeof selectorOrLocator === 'string') {
-      await this.page.locator(selectorOrLocator).first().waitFor({ state: 'visible', timeout });
-    } else {
-      await selectorOrLocator.first().waitFor({ state: 'visible', timeout });
-    }
+  /**
+   * Waits for an element to be visible
+   * @param selectorOrLocator Either a CSS selector string or a Locator object
+   * @param timeout Maximum time to wait in milliseconds
+   */
+  async waitForVisible(selectorOrLocator: string | Locator, timeout = 30000): Promise<void> {
+    const locator = typeof selectorOrLocator === 'string'
+      ? this.page.locator(selectorOrLocator).first()
+      : selectorOrLocator.first();
+    await locator.waitFor({ state: 'visible', timeout });
+  }
+
+  /**
+   * Gets a locator for an element by role
+   * @param role The ARIA role of the element
+   * @param name Optional name of the element
+   * @returns Locator for the element
+   */
+  getByRole(role: string, name?: string | RegExp): Locator {
+    return name
+      ? this.page.getByRole(role as any, { name })
+      : this.page.getByRole(role as any);
+  }
+
+  /**
+   * Gets a locator for an element by text
+   * @param text The text content of the element
+   * @returns Locator for the element
+   */
+  getByText(text: string): Locator {
+    return this.page.getByText(text);
+  }
+
+  /**
+   * Verifies mandatory field validation error
+   * @param fieldName The name of the field to check
+   */
+  async verifyMandatoryFieldError(fieldName: string): Promise<void> {
+    const field = this.page.getByRole('textbox', { name: fieldName });
+    const actualErrorMessage = await field.evaluate((el: HTMLInputElement) => el.validationMessage);
+    console.log(`📋 Actual error message for "${fieldName}": "${actualErrorMessage}"`);
+    await expect(actualErrorMessage).toContain('Please fill out this field');
   }
 }
