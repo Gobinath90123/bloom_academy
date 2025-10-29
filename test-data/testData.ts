@@ -90,7 +90,7 @@ export const testData: TestData = {
     sectionName: 'CLAT',
     downloadButton: 'Download',
   },
-  SubscribetoNewsLetterData: {
+  SubscribetoNewsLetterData:{
     email: 'test2025@yopmail.com',
-  }
+}
 };

@@ -51,11 +51,8 @@ export abstract class BasePage {
     await this.page.getByText(text).click();
   }
 
-  /**
-   * Verifies that text is visible on the page
-   * @param text The text to verify
-   */
-  async expectTextVisible(text: string): Promise<void> {
+  // Verify text is visible
+  async expectTextVisible(text: string) {
     await expect(this.page.getByText(text)).toBeVisible();
   }
 

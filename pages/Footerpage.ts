@@ -67,8 +67,7 @@ export class FooterPage extends BasePage {
     const url = newPage.url();
     console.log(`New tab URL: ${url}`);
     expect(url).toContain('play.google.com');
-    await newPage.close();
-
+    await newPage.close();  
   }
 
   async clickAppStoreLinkAndVerify() {
