@@ -1,18 +1,18 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { BasePage } from './Basepage';
 
-export class CollegeInfoPage {
-    readonly page: Page;
+export class CollegeInfoPage extends BasePage {
     readonly categoryLocator: Locator;
     readonly subCategoryLocator: Locator;
     readonly collegeNameLocator: Locator;
     readonly subCategoryCourseLocator: Locator;
 
     constructor(page: Page) {
-        this.page = page;
-        this.categoryLocator = page.locator("//div[@class='font-bold text-base text-gray-900 text-center']");
-        this.subCategoryLocator = page.locator("//div[@class='font-bold text-base text-gray-900']");
-        this.subCategoryCourseLocator = page.locator("//div[@class='font-bold text-base text-[#232b5c]']");
-        this.collegeNameLocator = page.locator("//td[@class='border px-4 py-2'][2]");
+        super(page);
+        this.categoryLocator = this.page.locator("//div[@class='font-bold text-base text-gray-900 text-center']");
+        this.subCategoryLocator = this.page.locator("//div[@class='font-bold text-base text-gray-900']");
+        this.subCategoryCourseLocator = this.page.locator("//div[@class='font-bold text-base text-[#232b5c]']");
+        this.collegeNameLocator = this.page.locator("//td[@class='border px-4 py-2'][2]");
     }
 
     async printCollegeInfoCategoryTitles() {
@@ -35,7 +35,6 @@ export class CollegeInfoPage {
         }
     }
 
-
     async printCollegeInfoSubCategoryCourseTitles() {
         await this.page.waitForTimeout(1000);
         const count = await this.subCategoryCourseLocator.count();
@@ -54,7 +53,6 @@ export class CollegeInfoPage {
             const title = await this.collegeNameLocator.nth(i).innerText();
             console.log(`CollegeName ${i + 1} Title: ${title}`);
         }
-
     }
 
     // Click a category dynamically by name
@@ -84,10 +82,4 @@ export class CollegeInfoPage {
         await locator.waitFor({ state: 'visible' });
         await locator.click();
     }
-
-
-
-
-
-
-};
+}

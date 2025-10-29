@@ -4,16 +4,15 @@ import path from 'path';
 import fs from 'fs';
 
 export class StudyMaterialPage extends BasePage {
-    readonly page: Page;
     readonly tabLocator: Locator;
     readonly sectionLocator: Locator;
     readonly collegeNameLocator: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.tabLocator = page.locator("//div[contains(@class, 'flex flex-wrap') and contains(@class, 'border-b')]//button");
-        this.sectionLocator = page.locator("//span[@class='z-10']");
-        this.collegeNameLocator = page.locator("//td[@class='px-6 py-3'][2]");
+        this.tabLocator = this.page.locator("//div[contains(@class, 'flex flex-wrap') and contains(@class, 'border-b')]//button");
+        this.sectionLocator = this.page.locator("//span[@class='z-10']");
+        this.collegeNameLocator = this.page.locator("//td[@class='px-6 py-3'][2]");
     }
 
     async printStudyMaterialTabTitles() {
@@ -46,6 +45,4 @@ export class StudyMaterialPage extends BasePage {
             }
         }
     }
-
- 
-};
+}

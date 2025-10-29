@@ -1,87 +1,125 @@
+import { Page } from '@playwright/test';
 import { BasePage } from './Basepage';
-import { expect } from '@playwright/test';
 import { DashboardPage } from './DashboardPage';
 
+/**
+ * LoginPage represents the login page of the application
+ * Implements page object model pattern for test automation
+ */
 export class LoginPage extends BasePage {
-  public usernameField = 'Mobile No / Email ID *';
-  public passwordField = 'Password *';
-  private loginButton = 'Login';
-  private successMessage = 'Login successful!';
-  private logoAltText = 'Tuluk Logo';
-  private errorMessageSelector = 'role=status';
-  private forgotPasswordLink = 'Forgot Password?';
-  private errorMessageInvalid = 'Please enter valid login';
-  private signUpLink = 'Sign Up';
-  private togglePasswordButton = 'button[aria-label="toggle password visibility"]';
+  // Constants for page elements
+  readonly USERNAME_FIELD = 'Mobile No / Email ID *';
+  readonly PASSWORD_FIELD = 'Password *';
+  readonly LOGIN_BUTTON = 'Login';
+  readonly LOGO_ALT_TEXT = 'Tuluk Logo';
+  readonly FORGOT_PASSWORD_LINK = 'Forgot Password?';
+  readonly SIGN_UP_LINK = 'Sign Up';
+  
+  // Common messages
+  readonly SUCCESS_MESSAGE = 'Login successful!';
+  readonly INVALID_LOGIN_MESSAGE = 'Please enter valid login';
+  readonly ERROR_MESSAGE_SELECTOR = 'role=status';
 
-  constructor(page: any) {
+  constructor(page: Page) {
     super(page);
   }
 
-  // Verify all login page elements
-  async verifyLoginPageElements() {
-    await this.expectTextVisible(this.usernameField);
-    await this.expectTextVisible(this.passwordField);
-    await this.expectRoleVisible('button', this.loginButton);
-    await this.expectRoleVisible('img', this.logoAltText);
+  /**
+   * Verifies all login page elements are present
+   */
+  async verifyLoginPageElements(): Promise<void> {
+    await this.expectTextVisible(this.USERNAME_FIELD);
+    await this.expectTextVisible(this.PASSWORD_FIELD);
+    await this.expectRoleVisible('button', this.LOGIN_BUTTON);
+    await this.expectRoleVisible('img', this.LOGO_ALT_TEXT);
     await this.expectRoleVisible('heading', 'Login');
     await this.expectTextVisible('Enter your credentials to');
     await this.expectTextVisible('Do not have an account? Sign');
   }
 
-  async enterUsername(username: string) {
-    await this.fillByRole('textbox', this.usernameField, username);
+  /**
+   * Enters username in the username field
+   * @param username The username to enter
+   */
+  async enterUsername(username: string): Promise<void> {
+    await this.fillByRole('textbox', this.USERNAME_FIELD, username);
   }
 
-  async enterPassword(password: string) {
-    await this.fillByRole('textbox', this.passwordField, password);
+  /**
+   * Enters password in the password field
+   * @param password The password to enter
+   */
+  async enterPassword(password: string): Promise<void> {
+    await this.fillByRole('textbox', this.PASSWORD_FIELD, password);
   }
 
-  async clickLoginButton() {
-    await this.clickByRole('button', this.loginButton);
+  /**
+   * Clicks the login button
+   */
+  async clickLoginButton(): Promise<void> {
+    await this.clickByRole('button', this.LOGIN_BUTTON);
   }
 
-  async verifyLoginSuccess() {
-    await this.expectTextVisible(this.successMessage);
+  /**
+   * Verifies successful login by checking for success message
+   */
+  async verifyLoginSuccess(): Promise<void> {
+    await this.expectTextVisible(this.SUCCESS_MESSAGE);
   }
 
-  async verifyInvalidLogin() {
-  await this.expectTextVisible(this.errorMessageInvalid);
-}
-
- async clickForgotPassword() {
-    await this.clickByRole('link', this.forgotPasswordLink);
+  /**
+   * Verifies invalid login by checking for error message
+   */
+  async verifyInvalidLogin(): Promise<void> {
+    await this.expectTextVisible(this.INVALID_LOGIN_MESSAGE);
   }
 
- async clickSignUp() {
-    await this.clickByRole('link', this.signUpLink);
+  /**
+   * Clicks the forgot password link
+   */
+  async clickForgotPassword(): Promise<void> {
+    await this.clickByRole('link', this.FORGOT_PASSWORD_LINK);
   }
 
-  
-  async verifyHeading(headingText: string) {
-    await expect(this.page.getByRole('heading', { name: headingText })).toBeVisible();
+  /**
+   * Clicks the sign up link
+   */
+  async clickSignUp(): Promise<void> {
+    await this.clickByRole('link', this.SIGN_UP_LINK);
   }
 
-  async login(username: string, password: string) {
+  /**
+   * Verifies a heading with specific text is visible
+   * @param headingText The text of the heading to verify
+   */
+  async verifyHeading(headingText: string): Promise<void> {
+    await this.expectRoleVisible('heading', headingText);
+  }
+
+  /**
+   * Performs complete login flow
+   * @param username The username to login with
+   * @param password The password to login with
+   */
+  async login(username: string, password: string): Promise<void> {
     await this.enterUsername(username);
     await this.enterPassword(password);
     await this.clickLoginButton();
     await this.verifyLoginSuccess();
   }
 
-   async verifyInvalidLoginMessage() {
-    await expect(this.page.getByRole('status')).toBeVisible();
+  /**
+   * Verifies invalid login message is displayed
+   */
+  async verifyInvalidLoginMessage(): Promise<void> {
+    await this.expectRoleVisible('status');
   }
 
-
-  getDashboardPage() {
+  /**
+   * Gets the dashboard page object
+   * @returns DashboardPage instance
+   */
+  getDashboardPage(): DashboardPage {
     return new DashboardPage(this.page);
   }
-
-  async verifyMandatoryFieldError(fieldName: string) {
-  const field = this.page.getByRole('textbox', { name: fieldName });
-  const actualErrorMessage = await field.evaluate((el: HTMLInputElement) => el.validationMessage);
-  console.log(`📋 Actual error message for "${fieldName}": "${actualErrorMessage}"`);
-  await expect(actualErrorMessage).toBe('Please fill out this field.');
-}
 }

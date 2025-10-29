@@ -1,14 +1,15 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/Loginpage';
 import { testData } from '../test-data/testData';
-const baseURL = process.env.BASE_URL;
+
+const BASE_URL = process.env.BASE_URL || testData.url;
 
 test.describe('Login Tests', () => {
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    await loginPage.navigateTo(baseURL as string);
+    await loginPage.navigateTo(BASE_URL);
   });
 
   test('Login with valid username and password', async () => {
@@ -41,8 +42,8 @@ test.describe('Login Tests', () => {
     await loginPage.enterUsername('');
     await loginPage.enterPassword('');
     await loginPage.clickLoginButton();
-    await loginPage.verifyMandatoryFieldError(loginPage.usernameField);
-    await loginPage.verifyMandatoryFieldError(loginPage.passwordField);
+    await loginPage.verifyMandatoryFieldError(loginPage.USERNAME_FIELD);
+    await loginPage.verifyMandatoryFieldError(loginPage.PASSWORD_FIELD);
   });
 
   test('Verify Forgot Password Link', async () => {
@@ -52,21 +53,20 @@ test.describe('Login Tests', () => {
 
   test('Verify Sign Up Link', async () => {
     await loginPage.clickSignUp();
-    await loginPage.verifyHeading('Register');
+    await loginPage.verifyHeading('Registration');
   });
 
   test('Verify Login with Invalid Mobile/Email and without entering password', async () => {
     await loginPage.enterUsername(testData.invalidUser.username);
     await loginPage.enterPassword('');
     await loginPage.clickLoginButton();
-    await loginPage.verifyMandatoryFieldError(loginPage.passwordField);
+    await loginPage.verifyMandatoryFieldError(loginPage.PASSWORD_FIELD);
   });
 
   test('Verify Login with valid Password and without entering Email', async () => {
     await loginPage.enterUsername('');
     await loginPage.enterPassword(testData.validUser.password);
     await loginPage.clickLoginButton();
-    await loginPage.verifyMandatoryFieldError(loginPage.usernameField);
+    await loginPage.verifyMandatoryFieldError(loginPage.USERNAME_FIELD);
   });
-
 });

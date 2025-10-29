@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/Loginpage';
-import { MockTestPage } from '../pages/Mocktestpage';
+import { MockTestPage } from '../pages/mocktestpage';
 import { testData } from '../test-data/testData';
 const baseURL = process.env.BASE_URL;
 

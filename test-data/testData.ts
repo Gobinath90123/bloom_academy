@@ -1,10 +1,62 @@
-export const testData = {
+/**
+ * Test data for the Blooms Academy automation tests
+ * Centralized test data to follow DRY principle
+ */
+
+export interface UserData {
+  username: string;
+  password: string;
+  name: string;
+  role: string;
+}
+
+export interface TestData {
+  url: string;
+  validUser: UserData;
+  invalidUser: {
+    username: string;
+    username2: string;
+    password: string;
+  };
+  paymentnonpaymentUser: {
+    username: string;
+    password: string;
+  };
+  sectionData: {
+    mockTestSectionName: string;
+    answeroptionIndex: number;
+  };
+  ExamData: {
+    PageName: string;
+    tabName: string;
+    CategoryName: string;
+    SubCategoryName: string;
+  };
+  StudyMaterialData: {
+    tabName: string;
+    sectionName: string;
+    downloadButton: string;
+  };
+  CollegeInfoData: {
+    CategoryName: string;
+  };
+  OldQuestionPaperData: {
+    tabName: string;
+    sectionName: string;
+    downloadButton: string;
+  };
+  SubscribetoNewsLetterData: {
+    email: string;
+  }
+}
+
+export const testData: TestData = {
   url: 'https://staging.bloomscareer.com/login',
   validUser: {
     username: '9952234924',
-    password: '12345',
+    password: '123456',
     name: 'Yazhini',
-    role: 'Other Profession',
+    role: 'Student',
   },
   invalidUser: {
     username: '9789440594',
@@ -12,31 +64,28 @@ export const testData = {
     password: 'abcd',
   },
   paymentnonpaymentUser: {
-    username: '8870319426',
+    username: '8489016157',
     password: '123456',
   },
   sectionData: {
     mockTestSectionName: 'Entrance Examinations',
     answeroptionIndex: 2,
   },
-
   ExamData: {
     PageName: 'Exam Updates',
-    tabName : 'Competitive Examinations',
+    tabName: 'Competitive Examinations',
     CategoryName: 'Previous Exam Previous Exam',
     SubCategoryName: 'AFTER DIPLOMA',
   },
-
-  StudyMaterialData:{
+  StudyMaterialData: {
     tabName: 'CURRENT AFFAIRS',
     sectionName: 'OCTOBER 2024 CURRENT AFFAIRS',
     downloadButton: 'Download',
   },
-  CollegeInfoData:{
+  CollegeInfoData: {
     CategoryName: 'KARNATAKA',
   },
-
-  OldQuestionPaperData:{
+  OldQuestionPaperData: {
     tabName: 'ENTRANCE EXAMS',
     sectionName: 'CLAT',
     downloadButton: 'Download',

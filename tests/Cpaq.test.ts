@@ -2,7 +2,8 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/Loginpage';
 import { CpaqPage } from '../pages/CpaqPage';
 import { testData } from '../test-data/testData';
-const baseURL = process.env.BASE_URL;
+const baseURL = process.env.BASE_URL || testData.url;
+
 test.describe('TestCase: Navigate to CPAQ Test Page (Payment already done)', () => {
 
   test('Verify CPAQ Test page opens successfully', async ({ page }) => {
@@ -49,7 +50,7 @@ test.describe('TestCase: Navigate to CPAQ Test Page (Payment already done)', () 
       await cpaqPage.verifyAssessmentButtons();
       await page.getByRole('button', { name: '×' }).click();
       await page.goto('https://staging.bloomscareer.com/cpaq-test');
-      await page.getByRole('banner').getByRole('link', { name: 'Home' }).click();
+      //await page.getByRole('banner').getByRole('link', { name: 'Home' }).click();
     } else {
       // Assessment flow (if payment already done)
       await cpaqPage.verifyAssessmentButtons();

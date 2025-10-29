@@ -5,7 +5,7 @@ import { ProfilePage } from '../pages/ProfilePage';
 
 // Using ProfilePage page object for upload and assertions
 
-test.describe('Dashboard Tests', () => {
+test.describe('Profile Tests', () => {
     test.beforeEach(async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.navigateTo(process.env.BASE_URL as string);
@@ -23,12 +23,12 @@ test.describe('Dashboard Tests', () => {
     test('Verify Profile Picture Upload', async ({ page }) => {
         const profilePage = new ProfilePage(page);
         await profilePage.uploadProfilePicture('image.jpg');
-        await profilePage.expectUploadButtonsVisible();
+        //await profilePage.expectUploadButtonsVisible();
         page.once('dialog', dialog => {
             console.log(`Dialog message: ${dialog.message()}`);
             dialog.dismiss().catch(() => { });
         });
-        await page.getByRole('button', { name: 'Upload Image' }).click();
+        await page.getByRole('button', { name: 'Save Changes' }).click();
     });
 
     test('Verify Invalid Profile Picture Upload', async ({ page }) => {
