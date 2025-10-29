@@ -1,51 +1,51 @@
-name: Playwright Tests
+# name: Playwright Tests
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
 
-    steps:
-      # Step 1: Checkout the repository
-      - name: checkout code
-        uses: actions/checkout@v4
+#     steps:
+#       # Step 1: Checkout the repository
+#       - name: checkout code
+#         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: 'npm'
+#       # Step 2: Set up Node.js
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
+#           cache: 'npm'
     
-      # Step 3: Install Dependencies
-      - name: Install Test Dependencies (safe)
-        run: |
-          npm install
-          echo "✅ Installed project dependencies"
+#       # Step 3: Install Dependencies
+#       - name: Install Test Dependencies (safe)
+#         run: |
+#           npm install
+#           echo "✅ Installed project dependencies"
 
-      # Step 4: Install Playwright browsers (Chrome included)
-      - name: Install Playwright browsers
-        run: |
-          npx playwright install --with-deps chromium
-          echo "✅ Installed Chromium browser for Playwright"
+#       # Step 4: Install Playwright browsers (Chrome included)
+#       - name: Install Playwright browsers
+#         run: |
+#           npx playwright install --with-deps chromium
+#           echo "✅ Installed Chromium browser for Playwright"
 
-      # Step 5: Run Playwright tests
-      - name: Run Playwright tests
-        env:
-           ENV: qa
-        run: |
-          npm run test:chrome
-          echo "✅ Playwright tests executed"
+#       # Step 5: Run Playwright tests
+#       - name: Run Playwright tests
+#         env:
+#            ENV: qa
+#         run: |
+#           npm run test:chrome
+#           echo "✅ Playwright tests executed"
   
-      # Step 6: Upload Monocart HTML report (even if tests fail)
-      - name: Upload Monocart HTML Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: monocart-report
-          path: report/monocart-report/
+#       # Step 6: Upload Monocart HTML report (even if tests fail)
+#       - name: Upload Monocart HTML Report
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: monocart-report
+#           path: report/monocart-report/

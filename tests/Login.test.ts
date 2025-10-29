@@ -10,6 +10,7 @@ test.describe('Login Tests', () => {
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     await loginPage.navigateTo(BASE_URL);
+    await page.waitForLoadState('networkidle'); 
   });
 
   test('Login with valid username and password', async () => {

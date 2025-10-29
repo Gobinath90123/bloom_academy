@@ -44,7 +44,10 @@ export class LoginPage extends BasePage {
   async enterUsername(username: string): Promise<void> {
     const usernameField = this.page.getByRole('textbox', { name: this.USERNAME_FIELD });
     await usernameField.waitFor({ state: 'visible' });
+    console.log(`📝 Entering username: ${username}`);
     await usernameField.fill(username);
+    console.log('✅ Username entered successfully');
+
   }
 
   /**
@@ -104,6 +107,7 @@ export class LoginPage extends BasePage {
    * @param password The password to login with
    */
   async login(username: string, password: string): Promise<void> {
+    console.log('🚀 Starting login process...');
     await this.enterUsername(username);
     await this.enterPassword(password);
     await this.clickLoginButton();
