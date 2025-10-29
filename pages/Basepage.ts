@@ -6,9 +6,11 @@ import { Page, expect, Locator } from '@playwright/test';
  */
 export abstract class BasePage {
   protected page: Page;
+  readonly copyrightText: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.copyrightText = page.getByText('© Tuluk Career Consultancy');
   }
 
   /**
@@ -25,7 +27,7 @@ export abstract class BasePage {
    * @param name Optional name of the element
    */
   async clickByRole(role: string, name?: string | RegExp): Promise<void> {
-    const locator = name 
+    const locator = name
       ? this.page.getByRole(role as any, { name })
       : this.page.getByRole(role as any);
     await locator.click();
@@ -107,6 +109,17 @@ export abstract class BasePage {
    */
   getByText(text: string): Locator {
     return this.page.getByText(text);
+  }
+
+  /**
+   * Scrolls to the footer of the page and verifies that the copyright text is visible
+   */
+  async scrollToFooter() {
+    await this.copyrightText.waitFor({ state: 'visible' });
+    await this.copyrightText.evaluate((div: HTMLElement) => {
+      div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
+    await this.page.waitForTimeout(500);
   }
 
   /**

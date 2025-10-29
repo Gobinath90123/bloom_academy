@@ -45,6 +45,9 @@ export interface TestData {
     sectionName: string;
     downloadButton: string;
   };
+  SubscribetoNewsLetterData: {
+    email: string;
+  }
 }
 
 export const testData: TestData = {
@@ -87,4 +90,7 @@ export const testData: TestData = {
     sectionName: 'CLAT',
     downloadButton: 'Download',
   },
+  SubscribetoNewsLetterData: {
+    email: 'test2025@yopmail.com',
+  }
 };

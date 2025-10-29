@@ -44,26 +44,28 @@ export class MockTestPage extends BasePage {
   async printAllSectionCardTitles() {
     const sectionCount = await this.sectionLocator.count();
     for (let i = 0; i < sectionCount; i++) {
-      const section = this.sectionLocator.nth(i);
+      // Re-locate section elements fresh each time (in case of reload)
+      const section = this.sectionLocator.nth(i);;
       const sectionTitle = await section.innerText();
-      await this.page.waitForTimeout(1000);
-      console.log(`\nSection ${i + 1} Title: ${sectionTitle}`);
-      // ✅ Scroll the section into view before clicking
       await section.scrollIntoViewIfNeeded();
-      await section.waitFor({ state: 'visible', timeout: 5000 });
-      await section.click();
-      await this.cardLocator.first().waitFor({ state: 'visible', timeout: 5000 });
-      const cards = this.cardLocator;
+       await section.waitFor({ state: 'visible', timeout: 5000 });
+      console.log(`\nSection ${i + 1} Title: ${sectionTitle}`);      
+     
+      await Promise.all([
+        this.page.waitForLoadState('domcontentloaded'),
+        section.click(),
+      ]);
+      // Wait for card content to appear
+      const cards = this.cardLocator.first();
       const cardCount = await cards.count();
       console.log(`Total cards found in "${sectionTitle}": ${cardCount}`);
-
       for (let j = 0; j < cardCount; j++) {
         const card = cards.nth(j);
-        await this.page.waitForTimeout(1000);
-
+        await card.waitFor({ state: 'visible', timeout: 5000 });
         const cardTitle = await card.locator('.font-semibold').innerText();
         console.log(`Card ${j + 1} Title: ${cardTitle}`);
       }
+      await this.page.waitForTimeout(1000);
     }
   }
 
