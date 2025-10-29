@@ -18,7 +18,10 @@ export abstract class BasePage {
    * @param url The URL to navigate to
    */
   async navigateTo(url: string): Promise<void> {
+    console.log(`🌐 Navigating to URL: ${url}`);
     await this.page.goto(url);
+    console.log(`✅ Successfully navigated to: ${url}`);
+
   }
 
   /**

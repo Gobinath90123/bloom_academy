@@ -37,10 +37,9 @@ export default defineConfig({
   // globalSetup: require.resolve('./global-setup.js'),
   projects: [
     {
-      name: 'chrome',
+      name: 'chromium',
       use: {
         browserName: 'chromium',
-        channel: 'chrome',
         headless: false,
         screenshot: 'only-on-failure',
         video: 'retain-on-failure',

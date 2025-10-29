@@ -42,7 +42,9 @@ export class LoginPage extends BasePage {
    * @param username The username to enter
    */
   async enterUsername(username: string): Promise<void> {
-    await this.fillByRole('textbox', this.USERNAME_FIELD, username);
+    const usernameField = this.page.getByRole('textbox', { name: this.USERNAME_FIELD });
+    await usernameField.waitFor({ state: 'visible' });
+    await usernameField.fill(username);
   }
 
   /**
