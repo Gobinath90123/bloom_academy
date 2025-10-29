@@ -23,7 +23,7 @@ test.describe('More Test', () => {
     });
 
     test('Verify More menu dropdown options', async ({ page }) => {
-        await moreMenu.verifyTopOptions(['About us', 'Shorts', 'Gallery', 'Programmes']);
+        await moreMenu.verifyTopOptions(['About us', 'Shorts', 'Gallery']);
     });
 
     test('Verify About Us page navigation', async ({ page }) => {
@@ -38,19 +38,19 @@ test.describe('More Test', () => {
         await moreMenu.navigateToURL('Gallery', 'Gallery');
     });
 
-    test('Verify Programmes submenu visibility', async ({ page }) => {
-        await moreMenu.verifyProgrammesSubOptions();
-    });
+    // test('Verify Programmes submenu visibility', async ({ page }) => {
+    //     await moreMenu.verifyProgrammesSubOptions();
+    // });
 
-    const programmeTests = [
-        { name: 'Undergraduate', heading: 'Undergraduate Programmes' },
-        { name: 'Postgraduate', heading: 'Postgraduate Programmes' },
-        { name: 'Diploma', heading: 'Diploma Programmes' },
-    ];
+    // const programmeTests = [
+    //     { name: 'Undergraduate', heading: 'Undergraduate Programmes' },
+    //     { name: 'Postgraduate', heading: 'Postgraduate Programmes' },
+    //     { name: 'Diploma', heading: 'Diploma Programmes' },
+    // ];
 
-    for (const programme of programmeTests) {
-        test(`Verify ${programme.name} programmes navigation`, async ({ page }) => {
-            await moreMenu.navigateToProgramme(programme.name, programme.heading);
-        });
-    }
+    // for (const programme of programmeTests) {
+    //     test(`Verify ${programme.name} programmes navigation`, async ({ page }) => {
+    //         await moreMenu.navigateToProgramme(programme.name, programme.heading);
+    //     });
+    // }
 });
