@@ -51,11 +51,6 @@ export abstract class BasePage {
     await this.page.getByText(text).click();
   }
 
-   async scrollToFooter() {
-    await this.copyrightText.scrollIntoViewIfNeeded();
-    await expect(this.copyrightText).toBeVisible();
-  }
-
   // Verify text is visible
   async expectTextVisible(text: string) {
     await expect(this.page.getByText(text)).toBeVisible();

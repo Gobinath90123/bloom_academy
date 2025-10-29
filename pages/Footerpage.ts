@@ -28,9 +28,9 @@ export class FooterPage extends BasePage {
     this.coordinatorEmail = page.locator("//div[normalize-space()='Coordinator@bloomscareer.com']");
     this.contactNumber = page.locator("//div[normalize-space()='7358484874']");
     this.copyrightText = page.getByText('© Tuluk Career Consultancy');
-    this.playStoreLink = page.locator("(//div[@class='text-xl font-semibold'])[1]");
-    this.appStoreLink = page.locator("(//div[@class='text-xl font-semibold'])[2]");
-    this.socialLinks = page.locator("//div[@class='flex gap-6']//a");
+    this.playStoreLink = page.locator("(//div[@class='text-sm font-semibold'])[1]");
+    this.appStoreLink = page.locator("(//div[@class='text-sm font-semibold'])[2]");
+    this.socialLinks = page.locator("//div[@class='flex gap-4']//a");
     this.emailInput = page.getByRole('textbox', { name: 'Enter email' });
   }
 
